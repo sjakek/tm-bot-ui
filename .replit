@@ -1,16 +1,14 @@
 run = "npm install && npm run dev"
-hidden = [".config", "package-lock.json"]
-
-[gitHubImport]
-requiredFiles = [".replit"]
+hidden = [".config", "package-lock.json", ".next"]
 
 [languages]
 
 [languages.javascript]
 pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
 
-[deployment]
-run = ["sh", "-c", "npm install && npm run dev"]
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
 
 [env]
 NODE_ENV = "development"
+PORT = "3000"
