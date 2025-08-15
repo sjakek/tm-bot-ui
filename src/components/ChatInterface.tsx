@@ -179,7 +179,7 @@ export default function ChatInterface() {
           const a = assistants.find(x => x.id === id);
           if (a) {
             setParameters(prev => ({
-              model: a.model || 'gpt-5',
+              model: a.model || 'gpt-5-mini',
               temperature: a.default_parameters?.temperature ?? prev.temperature,
               reasoning_effort: a.default_parameters?.reasoning_effort ?? prev.reasoning_effort,
               verbosity: a.default_parameters?.verbosity ?? prev.verbosity,
