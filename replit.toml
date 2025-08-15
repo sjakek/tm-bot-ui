@@ -1,12 +1,7 @@
-run = ["sh", "-c", "npm run build && npm run start:replit"]
+[deployment]
+deploymentTarget = "cloudrun"
+ignorePorts = false
 
-[nix]
-channel = "stable-23_11"
-
-[env]
-PORT = "3000"
-
-[deploy]
-build = ["npm", "run", "build"]
-start = ["npm", "run", "start:replit"]
-healthcheckPath = "/login"
+[[ports]]
+localPort = 3000
+externalPort = 80
