@@ -2,15 +2,12 @@ run = "npm install && npm run dev"
 hidden = [".config", "package-lock.json"]
 
 [gitHubImport]
-requiredFiles = [".replit", "replit.nix"]
+requiredFiles = [".replit"]
 
 [languages]
 
 [languages.javascript]
 pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
-
-[languages.javascript.languageServer]
-start = "typescript-language-server --stdio"
 
 [deployment]
 run = ["sh", "-c", "npm install && npm run dev"]
