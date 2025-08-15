@@ -33,14 +33,19 @@ export default function ChatInterface() {
         
         if (assistantsData.length > 0 && !selectedAssistant) {
           const first = assistantsData[0];
+          console.log('Setting first assistant:', first);
+          console.log('First assistant model:', first.model);
+          console.log('First assistant default_parameters:', first.default_parameters);
           setSelectedAssistant(first.id);
-          setParameters(prev => ({
+          const newParams = {
             model: first.model || 'gpt-5-mini',
-            temperature: first.default_parameters?.temperature ?? prev.temperature,
-            reasoning_effort: first.default_parameters?.reasoning_effort ?? prev.reasoning_effort,
-            verbosity: first.default_parameters?.verbosity ?? prev.verbosity,
-            max_tokens: prev.max_tokens,
-          }));
+            temperature: first.default_parameters?.temperature ?? 0.7,
+            reasoning_effort: first.default_parameters?.reasoning_effort ?? 'medium',
+            verbosity: first.default_parameters?.verbosity ?? 'medium',
+            max_tokens: 4000,
+          };
+          console.log('Setting new parameters:', newParams);
+          setParameters(newParams);
         }
 
         // Load sessions
@@ -175,16 +180,22 @@ export default function ChatInterface() {
         assistants={assistants}
         selectedAssistant={selectedAssistant}
         onAssistantChange={(id) => {
+          console.log('Switching to assistant:', id);
           setSelectedAssistant(id);
           const a = assistants.find(x => x.id === id);
           if (a) {
-            setParameters(prev => ({
+            console.log('Found assistant:', a);
+            console.log('Assistant model:', a.model);
+            console.log('Assistant default_parameters:', a.default_parameters);
+            const newParams = {
               model: a.model || 'gpt-5-mini',
-              temperature: a.default_parameters?.temperature ?? prev.temperature,
-              reasoning_effort: a.default_parameters?.reasoning_effort ?? prev.reasoning_effort,
-              verbosity: a.default_parameters?.verbosity ?? prev.verbosity,
-              max_tokens: prev.max_tokens,
-            }));
+              temperature: a.default_parameters?.temperature ?? 0.7,
+              reasoning_effort: a.default_parameters?.reasoning_effort ?? 'medium',
+              verbosity: a.default_parameters?.verbosity ?? 'medium',
+              max_tokens: 4000,
+            };
+            console.log('Setting new parameters:', newParams);
+            setParameters(newParams);
           }
         }}
         onSessionSelect={selectSession}

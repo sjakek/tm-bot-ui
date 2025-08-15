@@ -15,6 +15,9 @@ export default function ParameterControls({
 }: ParameterControlsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const models = getAvailableModels();
+  
+  console.log('ParameterControls rendered with parameters:', parameters);
+  console.log('Available models:', models);
 
   const updateParameter = <K extends keyof GenerationParameters>(
     key: K,
