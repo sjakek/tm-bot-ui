@@ -33,9 +33,14 @@ export default function ChatInterface() {
         
         if (assistantsData.length > 0 && !selectedAssistant) {
           const first = assistantsData[0];
-          console.log('Setting first assistant:', first);
-          console.log('First assistant model:', first.model);
+          console.log('=== DEBUG: First Assistant ===');
+          console.log('Full first assistant object:', JSON.stringify(first, null, 2));
+          console.log('Does first.model exist?', 'model' in first);
+          console.log('First assistant model value:', first.model);
+          console.log('First assistant model type:', typeof first.model);
           console.log('First assistant default_parameters:', first.default_parameters);
+          console.log('=== END DEBUG ===');
+          
           setSelectedAssistant(first.id);
           const newParams = {
             model: first.model || 'gpt-5-mini',

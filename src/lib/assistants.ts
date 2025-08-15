@@ -6,7 +6,13 @@ import { Assistant } from '@/types';
  */
 export function getAssistants(): Assistant[] {
   try {
+    console.log('=== DEBUG: Environment Variables ===');
+    console.log('NEXT_PUBLIC_ASSISTANTS_CONFIG exists:', !!process.env.NEXT_PUBLIC_ASSISTANTS_CONFIG);
+    console.log('ASSISTANTS_CONFIG exists:', !!process.env.ASSISTANTS_CONFIG);
+    
     const assistantsConfig = process.env.NEXT_PUBLIC_ASSISTANTS_CONFIG || process.env.ASSISTANTS_CONFIG;
+    
+    console.log('Raw assistantsConfig (first 200 chars):', assistantsConfig?.substring(0, 200));
     
     if (!assistantsConfig) {
       console.warn('ASSISTANTS_CONFIG environment variable not set (try NEXT_PUBLIC_ASSISTANTS_CONFIG)');
@@ -14,6 +20,7 @@ export function getAssistants(): Assistant[] {
     }
 
     const assistants = JSON.parse(assistantsConfig) as Assistant[];
+    console.log('Parsed assistants:', assistants.map(a => ({ id: a.id, name: a.name, model: a.model })));
     
     // Validate the configuration
     for (const assistant of assistants) {
