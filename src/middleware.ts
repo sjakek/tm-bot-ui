@@ -4,16 +4,34 @@ import { verifySessionToken } from '@/lib/auth';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  
+  // Allow health check endpoint to pass through immediately
+  if (pathname === '/api/health') {
+    return NextResponse.next();
+  }
+  
+  // Enhanced health check detection for root path - Replit deployment services
+  const userAgent = request.headers.get('user-agent') || '';
+  const isHealthCheck = 
+    userAgent.includes('health') ||
+    userAgent.includes('probe') ||
+    userAgent.includes('check') ||
+    userAgent.includes('replit') ||
+    userAgent.includes('monitor') ||
+    request.headers.get('x-forwarded-for')?.includes('replit') ||
+    request.headers.get('x-replit-deployment-id') ||
+    request.method === 'HEAD';
 
-  // Allow health check requests to root path (for Replit deployment)
-  if (pathname === '/' && isHealthCheckRequest(request)) {
-    return NextResponse.json({ status: 'ok' }, { status: 200 });
+  if (isHealthCheck && pathname === '/') {
+    return new Response('OK', { 
+      status: 200,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 
   // Allow public paths without auth
   if (
     pathname === '/login' ||
-    pathname === '/api/health' ||
     pathname.startsWith('/api/auth/') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon') ||
@@ -34,21 +52,6 @@ export async function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
-
-function isHealthCheckRequest(request: NextRequest): boolean {
-  const userAgent = request.headers.get('user-agent')?.toLowerCase() || '';
-  const accept = request.headers.get('accept') || '';
-  
-  // Detect health check requests from deployment services
-  return (
-    userAgent.includes('replit') ||
-    userAgent.includes('health') ||
-    userAgent.includes('monitor') ||
-    userAgent.includes('check') ||
-    accept === '*/*' ||
-    request.method === 'HEAD'
-  );
 }
 
 export const config = {

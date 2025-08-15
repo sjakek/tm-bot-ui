@@ -18,7 +18,13 @@ PORT = "3000"
 run = "npm start"
 build = "npm run build"
 ignorePorts = false
-healthCheck = "/api/health"
+healthCheckPath = "/api/health"
+deploymentTarget = "cloudrun"
+
+[deployment.health]
+path = "/api/health"
+timeoutSeconds = 30
+periodSeconds = 10
 
 [[ports]]
 localPort = 3000

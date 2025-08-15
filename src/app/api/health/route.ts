@@ -2,27 +2,41 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // Simple health check - just return 200 OK
-    return NextResponse.json(
-      { 
-        status: 'ok',
+    // Enhanced health check with more details
+    return new Response(
+      JSON.stringify({ 
+        status: 'OK', 
         timestamp: new Date().toISOString(),
-        service: 'assistants-chat-ui'
-      },
-      { status: 200 }
+        service: 'assistants-chat-ui',
+        version: '1.0.0',
+        environment: process.env.NODE_ENV || 'development'
+      }), 
+      { 
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }
     );
   } catch (error) {
-    return NextResponse.json(
+    return new Response(
+      JSON.stringify({ 
+        status: 'ERROR', 
+        error: 'Health check failed',
+        timestamp: new Date().toISOString()
+      }), 
       { 
-        status: 'error',
-        error: 'Health check failed'
-      },
-      { status: 500 }
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
     );
   }
 }
 
+// Handle HEAD requests for health checks
 export async function HEAD() {
-  // Support HEAD requests for health checks
-  return new NextResponse(null, { status: 200 });
+  return new Response(null, { status: 200 });
+}
+
+// Handle other methods that might be used for health checks
+export async function POST() {
+  return new Response('OK', { status: 200 });
 }
