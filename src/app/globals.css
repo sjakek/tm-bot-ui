@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -24,3 +26,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Improve contrast for form controls */
+input, select, textarea, button {
+  color: #1f2937; /* gray-800 */
+}
+
+select option { color: #111827; /* gray-900 */ }
+
+/* Ensure placeholder text has higher contrast */
+::placeholder { color: #6b7280; /* gray-500 */ opacity: 1; }

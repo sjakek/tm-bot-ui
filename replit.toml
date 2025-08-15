@@ -1,0 +1,12 @@
+run = ["sh", "-c", "npm run build && npm run start:replit"]
+
+[nix]
+channel = "stable-23_11"
+
+[env]
+PORT = "3000"
+
+[deploy]
+build = ["npm", "run", "build"]
+start = ["npm", "run", "start:replit"]
+healthcheckPath = "/login"
