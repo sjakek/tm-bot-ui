@@ -165,7 +165,7 @@ export default function ParameterControls({
               <button
                 onClick={() => {
                   onParametersChange({
-                    model: 'gpt-5',
+                    model: 'gpt-5-mini',
                     temperature: 0.7,
                     reasoning_effort: 'medium',
                     verbosity: 'medium',

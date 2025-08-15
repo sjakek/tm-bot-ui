@@ -13,7 +13,7 @@ export default function ChatInterface() {
   const [assistants, setAssistants] = useState<Assistant[]>([]);
   const [selectedAssistant, setSelectedAssistant] = useState<string>('');
   const [parameters, setParameters] = useState<GenerationParameters>({
-    model: 'gpt-5',
+    model: 'gpt-5-mini',
     temperature: 0.7,
     reasoning_effort: 'medium',
     verbosity: 'medium',
@@ -35,7 +35,7 @@ export default function ChatInterface() {
           const first = assistantsData[0];
           setSelectedAssistant(first.id);
           setParameters(prev => ({
-            model: first.model || 'gpt-5',
+            model: first.model || 'gpt-5-mini',
             temperature: first.default_parameters?.temperature ?? prev.temperature,
             reasoning_effort: first.default_parameters?.reasoning_effort ?? prev.reasoning_effort,
             verbosity: first.default_parameters?.verbosity ?? prev.verbosity,
