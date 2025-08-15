@@ -5,6 +5,11 @@ import { verifySessionToken } from '@/lib/auth';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Allow health check requests to root path (for Replit deployment)
+  if (pathname === '/' && isHealthCheckRequest(request)) {
+    return NextResponse.json({ status: 'ok' }, { status: 200 });
+  }
+
   // Allow public paths without auth
   if (
     pathname === '/login' ||
@@ -29,6 +34,21 @@ export async function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
+}
+
+function isHealthCheckRequest(request: NextRequest): boolean {
+  const userAgent = request.headers.get('user-agent')?.toLowerCase() || '';
+  const accept = request.headers.get('accept') || '';
+  
+  // Detect health check requests from deployment services
+  return (
+    userAgent.includes('replit') ||
+    userAgent.includes('health') ||
+    userAgent.includes('monitor') ||
+    userAgent.includes('check') ||
+    accept === '*/*' ||
+    request.method === 'HEAD'
+  );
 }
 
 export const config = {
