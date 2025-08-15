@@ -1,5 +1,6 @@
-run = "npm install && npm run dev"
-hidden = [".config", "package-lock.json", ".next"]
+run = "npm install && npm run build && npm start"
+hidden = [".config", "package-lock.json", ".next", "node_modules"]
+modules = ["nodejs-20"]
 
 [languages]
 
@@ -10,5 +11,17 @@ pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
 start = "typescript-language-server --stdio"
 
 [env]
-NODE_ENV = "development"
+NODE_ENV = "production"
 PORT = "3000"
+
+[deployment]
+run = "npm start"
+build = "npm run build"
+ignorePorts = false
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[nix]
+packages = ["nodejs-20", "npm"]

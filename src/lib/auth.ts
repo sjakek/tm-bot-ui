@@ -1,8 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { AuthSession } from '@/types';
-import fs from 'fs';
-import path from 'path';
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.SESSION_SECRET || 'your-secret-key-at-least-32-characters-long'
@@ -26,22 +24,7 @@ export function verifyPasscode(inputPasscode: string): boolean {
 }
 
 function getConfiguredPasscode(): string | null {
-  // Prefer value from .env.local on disk to avoid stale runtime env in dev
-  try {
-    const envPath = path.join(process.cwd(), '.env.local');
-    if (fs.existsSync(envPath)) {
-      const contents = fs.readFileSync(envPath, 'utf8');
-      const match = contents.match(/^\s*AUTH_PASSCODE\s*=\s*(.*)$/m);
-      if (match) {
-        const raw = match[1].trim();
-        // Strip surrounding quotes if present
-        const unquoted = raw.replace(/^['"]|['"]$/g, '');
-        return unquoted;
-      }
-    }
-  } catch (e) {
-    // ignore file errors and fall back to process.env
-  }
+  // Use environment variable directly for production compatibility
   return process.env.AUTH_PASSCODE || null;
 }
 
