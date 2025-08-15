@@ -18,6 +18,7 @@ PORT = "3000"
 run = "npm start"
 build = "npm run build"
 ignorePorts = false
+healthCheck = "/api/health"
 
 [[ports]]
 localPort = 3000

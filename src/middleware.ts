@@ -8,6 +8,7 @@ export async function middleware(request: NextRequest) {
   // Allow public paths without auth
   if (
     pathname === '/login' ||
+    pathname === '/api/health' ||
     pathname.startsWith('/api/auth/') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon') ||
@@ -31,5 +32,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api/auth|_next|favicon|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)'],
+  matcher: ['/((?!api/health|api/auth|_next|favicon|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)'],
 };
