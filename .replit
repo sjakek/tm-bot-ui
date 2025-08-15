@@ -1,4 +1,4 @@
-run = "npm install && npm run dev"
+run = "npm install && npm run build && npm run start:replit"
 hidden = [".config", "package-lock.json"]
 
 [gitHubImport]
@@ -10,7 +10,7 @@ requiredFiles = [".replit"]
 pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
 
 [deployment]
-run = ["sh", "-c", "npm install && npm run dev"]
+run = ["sh", "-c", "npm install && npm run build && npm run start:replit"]
 
 [env]
-NODE_ENV = "development"
+NODE_ENV = "production"
