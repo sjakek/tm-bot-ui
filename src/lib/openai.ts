@@ -30,7 +30,7 @@ export interface ResponsesApiRequest {
       vector_store_ids: string[];
     };
   }>;
-  max_completion_tokens?: number;
+  // max_completion_tokens removed - auto-managed by API
 }
 
 /**
@@ -90,10 +90,7 @@ export function createResponsesApiRequest(
     request.temperature = parameters.temperature;
   }
 
-  // Add max_completion_tokens if specified
-  if (parameters.max_tokens) {
-    request.max_completion_tokens = parameters.max_tokens;
-  }
+  // Max tokens parameter removed - OpenAI Responses API auto-manages token limits
 
   // Add file search tool if assistant supports it
   if (assistantSupportsFileSearch(assistantId)) {

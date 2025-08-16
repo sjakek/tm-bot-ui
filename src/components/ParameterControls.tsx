@@ -144,24 +144,7 @@ export default function ParameterControls({
               </p>
             </div>
 
-            {/* Max Tokens */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Max Tokens (Optional)
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="32000"
-                value={parameters.max_tokens || ''}
-                onChange={(e) => updateParameter('max_tokens', e.target.value ? parseInt(e.target.value) : undefined)}
-                placeholder="Auto"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
-              />
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                Leave empty for automatic token limit
-              </p>
-            </div>
+            {/* Max Tokens removed - auto-managed by OpenAI API */}
 
             {/* Reset Button */}
             <div className="pt-2 border-t border-gray-200">
@@ -171,8 +154,7 @@ export default function ParameterControls({
                     model: 'gpt-5-mini',
                     temperature: 0.7,
                     reasoning_effort: 'medium',
-                    verbosity: 'medium',
-                    max_tokens: undefined
+                    verbosity: 'medium'
                   });
                 }}
                 className="w-full px-3 py-2 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800"

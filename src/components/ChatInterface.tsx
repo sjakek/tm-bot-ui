@@ -17,7 +17,7 @@ export default function ChatInterface() {
     temperature: 0.7,
     reasoning_effort: 'medium',
     verbosity: 'medium',
-    max_tokens: undefined
+    // max_tokens removed
   });
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +47,7 @@ export default function ChatInterface() {
             temperature: first.default_parameters?.temperature ?? 0.7,
             reasoning_effort: first.default_parameters?.reasoning_effort ?? 'medium',
             verbosity: first.default_parameters?.verbosity ?? 'medium',
-            max_tokens: 4000,
+            // max_tokens removed,
           };
           console.log('Setting new parameters:', newParams);
           setParameters(newParams);
@@ -179,6 +179,14 @@ export default function ChatInterface() {
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      
       <Sidebar
         sessions={sessions}
         currentSession={currentSession}
@@ -197,7 +205,7 @@ export default function ChatInterface() {
               temperature: a.default_parameters?.temperature ?? 0.7,
               reasoning_effort: a.default_parameters?.reasoning_effort ?? 'medium',
               verbosity: a.default_parameters?.verbosity ?? 'medium',
-              max_tokens: 4000,
+              // max_tokens removed,
             };
             console.log('Setting new parameters:', newParams);
             setParameters(newParams);
@@ -213,27 +221,38 @@ export default function ChatInterface() {
       />
       
       <div className="flex-1 flex flex-col min-w-0 bg-gray-50 dark:bg-gray-800">
-        <div className="flex-shrink-0 border-b border-gray-200 dark:border-gray-700 p-4">
+        <div className="flex-shrink-0 border-b border-gray-200 dark:border-gray-700 p-2 sm:p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4 min-w-0">
               {!sidebarOpen && (
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="p-2 rounded-md hover:bg-gray-100"
+                  className="p-2 rounded-md hover:bg-gray-100 lg:hidden"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                   </svg>
                 </button>
               )}
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                {currentSession?.name || 'Select or create a chat session'}
+              <h1 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 truncate">
+                {currentSession?.name || 'Chat'}
               </h1>
             </div>
-            <ParameterControls
-              parameters={parameters}
-              onParametersChange={setParameters}
-            />
+            <div className="hidden md:block">
+              <ParameterControls
+                parameters={parameters}
+                onParametersChange={setParameters}
+              />
+            </div>
+            {/* Mobile settings button */}
+            <button 
+              className="md:hidden p-2 rounded-md hover:bg-gray-100"
+              onClick={() => {/* TODO: Mobile settings modal */}}
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+              </svg>
+            </button>
           </div>
         </div>
         

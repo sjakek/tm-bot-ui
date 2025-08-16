@@ -27,7 +27,7 @@ export interface GenerationParameters {
   temperature: number;
   reasoning_effort: 'minimal' | 'low' | 'medium' | 'high';
   verbosity: 'low' | 'medium' | 'high';
-  max_tokens?: number;
+  // max_tokens removed - auto-managed by API
 }
 
 class DatabaseManager {
