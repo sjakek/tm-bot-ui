@@ -228,7 +228,7 @@ export default function ChatInterface() {
         onSessionSelect={selectSession}
         onSessionDelete={deleteSession}
         onSessionRename={updateSessionName}
-        onNewSession={createNewSession}
+        onNewSession={() => createNewSession()}
         onLogout={logout}
         isOpen={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
@@ -264,7 +264,7 @@ export default function ChatInterface() {
             <div className="flex items-center space-x-2 md:hidden">
               {/* New Chat button for mobile */}
               <button 
-                onClick={createNewSession}
+                onClick={() => createNewSession()}
                 className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-600 dark:text-blue-400"
                 title="New Chat"
               >
